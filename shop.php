@@ -169,10 +169,10 @@ $gta= new VideoGame(4,'gta5',60,false);
 $creditcard1=new CreditCard(100,2033,5050550503);
 $compratore1 = new Buyer(1,'Pippo','Baudo','Via della pace,8',3443434331,true);
 $creditcard2=new CreditCard(250,2024,5050550888);
-$compratore2 = new Buyer(2,'Nancy','Baudo','Via degli ulivi,22',3498687676,true);
+$compratore2 = new Buyer(2,'Nancy','Baudo','Via degli ulivi,22',3728687676,true);
 $creditcard3=new CreditCard(1000,2033,5050550666);
 $compratore3 = new Buyer(3,'Raffaele','Auriemma','Via della morte,4',3443376432,true);
-
+$compratore4 = new Buyer(4,'Enzo','Miccio','Via degli Aureli,15',3943676873,true);
 try{
 $compratore1->buyProduct($creditcard1,$gta);
 }catch(Exception $error){
@@ -209,20 +209,19 @@ echo "Il credito residuo della prima carta dopo l'acquisto è di " . $creditcard
 echo "Il credito residuo della seconda carta dopo l'acquisto è di " . $creditcard2->getAmount() . " euro <br>";
 echo "Il credito residuo della terza carta dopo l'acquisto è di " . $creditcard3->getAmount() . " euro <br>";
 // print_r($compratore3->showAcquisti());
-$compratori=[$compratore1,$compratore2,$compratore3];
+$compratori=[$compratore1,$compratore2,$compratore3,$compratore4];
 $prodotti=[$cremaviso,$pigiama,$gta];
-?>
+foreach ($compratori as $compratore) {
 
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
-	<head>
-		<meta charset="utf-8">
-		<title></title>
-	</head>
-	<body>
- <?php foreach ($compratori as $compratore){?>
-	 <p><?php echo $compratore->getName() ." ha acquistato: " ?></p>
-	 <p><?php print_r($compratore->showAcquisti()) ?></p>
-<?php }?>
-	</body>
-</html>
+if(count($compratore->showAcquisti())>0){
+	echo $compratore->getName(). " ha effettuato acquisti <br>";
+} else{
+		echo $compratore->getName(). " non ha effettuato acquisti <br>";
+}
+}
+$compratori=[$compratore1,$compratore2,$compratore3];
+foreach ($compratori as $compratore) {
+foreach ($compratore->showAcquisti() as $acquisto) {
+  echo $compratore->getName() ." ha acquistato ".$acquisto->getModel()."<br>";
+}
+}
