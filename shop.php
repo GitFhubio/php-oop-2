@@ -18,6 +18,7 @@ class Product{
 }
 
 class Elettronica extends Product{
+
 }
 class Benessere extends Product{
 
@@ -37,8 +38,6 @@ class Pc extends Elettronica{
 
 class Buyer extends CreditCard {
 protected $name;
-protected $amount;
-protected $expirationdate;
 protected $acquisti=[];
 protected $surname;
 protected $address;
@@ -49,10 +48,11 @@ public function __construct($name,$surname,$address,$phone_number){
 	 $this->address=$address;
 	 $this->phone_number=$phone_number;
 }
-public function buyProduct($expirationdate,$amount,Product $product){
-	if($expirationdate>$current_year && $amount>$product->getPrice()){
+public function buyProduct(CreditCard $creditcard,Product $product){
+if($product->getPrice()<$creditcard->amount){
 	$this->acquisti[]=$product;
-}}
+}
+}
 public function showAcquisti(){
 	return $this->acquisti;
 }
@@ -61,10 +61,16 @@ public function showAcquisti(){
 
 class CreditCard{
 protected $expirationdate;
-protected $amount;
-public function __construct($amount,$expirationdate){
+public $amount;
+public function __construct(float $amount,int $expirationdate){
 	$this->amount=$amount;
-	$this->expirationdate=$espirationdate;
+	$this->expirationdate=$expirationdate;
+	if (!$this->isValid()){
+		throw new Exception('La carta è scaduta');
+	}
+}
+public function isValid(){
+return $this->expirationdate>2011;
 }
 }
 
@@ -73,7 +79,10 @@ $cremaviso = new Benessere('avene repair',15);
 $pigiama = new Clothes('pigiama',18);
 $gta= new VideoGame('gta5',60);
 $compratore1 = new Buyer('Pippo','Baudo','Via della pace,8',3443434331);
-
-$compratore1->buyProduct(2033,150,$gta);
-
+$creditcard1=new CreditCard(100,2033);
+try{
+$compratore1->buyProduct($creditcard1,$gta);
+}catch(Exception $error){
+echo $error->getMessage();
+}
 print_r($compratore1->showAcquisti());
