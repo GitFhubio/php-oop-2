@@ -4,10 +4,13 @@ $current_year =(int)date('Y');
 
 class Product{
 	protected $model;
+	protected $shippingTime = 3;
 	protected $price;
-	public function __construct(string $model,float $price){
+	protected $prime;
+	public function __construct(string $model,float $price,bool $prime){
 		$this->price=$price;
 		$this->model=$model;
+		$this->prime=$prime;
 	}
 	public function getModel(){
 		return $this->model;
@@ -15,6 +18,12 @@ class Product{
   public function getPrice(){
 		return $this->price;
 	}
+	public function getPrime(){
+	 return $this->prime;
+	}
+	 public function setShipping($shippingTime){
+			 $this->shippingTime=$shippingTime;
+	 }
 }
 
 class Elettronica extends Product{
@@ -37,13 +46,15 @@ class Pc extends Elettronica{
 }
 
 class Buyer extends CreditCard {
+protected $prime;
 protected $name;
 protected $acquisti=[];
 protected $surname;
 protected $address;
 protected $phone_number;
-public function __construct($cardnumber,$name,$surname,$address,$phone_number){
+public function __construct($cardnumber,$name,$surname,$address,$phone_number,$prime){
 	$this->name=$name;
+ $this->prime=$prime;
 	$this->cardnumber=$cardnumber;
    $this->surname=$surname;
 	 $this->address=$address;
@@ -53,6 +64,9 @@ public function buyProduct(CreditCard $creditcard,Product $product){
 if($product->getPrice()<$creditcard->amount){
 	$this->acquisti[]=$product;
 }
+if ($product->getPrime() == true && $this->prime == true) {
+		$product->setShipping(1);
+}
 }
 public function showAcquisti(){
 	return $this->acquisti;
@@ -60,7 +74,9 @@ public function showAcquisti(){
 public function getName(){
 	return $this->name;
 }
-
+public function getPrime(){
+return $this->prime;
+}
 }
 
 class CreditCard{
@@ -80,16 +96,16 @@ return $this->expirationdate>$current_year;
 }
 }
 
-$notebook= new Pc('asus 354',700.45);
-$cremaviso = new Benessere('avene repair',15);
-$pigiama = new Clothes('pigiama',18);
-$gta= new VideoGame('gta5',60);
+$notebook= new Pc('asus 354',700.45,true);
+$cremaviso = new Benessere('avene repair',15,true);
+$pigiama = new Clothes('pigiama',18,true);
+$gta= new VideoGame('gta5',60,true);
 $creditcard1=new CreditCard(100,2033,5050550503);
-$compratore1 = new Buyer(5050550503,'Pippo','Baudo','Via della pace,8',3443434331);
+$compratore1 = new Buyer(5050550503,'Pippo','Baudo','Via della pace,8',3443434331,true);
 $creditcard2=new CreditCard(250,2024,5050550888);
-$compratore2 = new Buyer(5050550888,'Nancy','Baudo','Via degli ulivi,22',3498687676);
+$compratore2 = new Buyer(5050550888,'Nancy','Baudo','Via degli ulivi,22',3498687676,true);
 $creditcard3=new CreditCard(1000,2033,5050550666);
-$compratore3 = new Buyer(5050550666,'Raffaele','Auriemma','Via della morte,4',3443376432);
+$compratore3 = new Buyer(5050550666,'Raffaele','Auriemma','Via della morte,4',3443376432,true);
 
 try{
 $compratore1->buyProduct($creditcard1,$gta);
