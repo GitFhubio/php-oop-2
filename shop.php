@@ -70,7 +70,7 @@ public function __construct(float $amount,int $expirationdate){
 	}
 }
 public function isValid(){
-return $this->expirationdate>2011;
+return $this->expirationdate>$current_year;
 }
 }
 
