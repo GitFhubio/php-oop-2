@@ -1,10 +1,36 @@
 <?php
+class Shop {
+  protected $name;
+  protected $website;
+	protected $location;
+
+  public function __construct(string $name, string $website,string $location) {
+    $this -> name = $name;
+    $this -> website = $website;
+    $this -> location = $location;
+  }
+
+  public function getName() {
+    return $this -> name;
+  }
+
+  public function getWebsite() {
+    return $this -> website;
+  }
+
+  public function getLocation() {
+    return $this -> location;
+  }
+}
+
 class Product{
+	private $id;
 	protected $model;
 	protected $shippingTime = 3;
 	protected $price;
 	protected $prime;
-	public function __construct(string $model,float $price,bool $prime){
+	public function __construct(int $id,string $model,float $price,bool $prime){
+		$this->id=$id;
 		$this->price=$price;
 		$this->model=$model;
 		$this->prime=$prime;
@@ -17,6 +43,9 @@ class Product{
 	}
 	public function getPrime(){
 	 return $this->prime;
+	}
+	public function getId(){
+		return $this->id;
 	}
 	 public function setShipping($shippingTime){
 			 $this->shippingTime=$shippingTime;
@@ -58,19 +87,29 @@ class Pc extends Elettronica{
 }
 
 class Buyer extends CreditCard {
+private $id;
+protected  $cards=[];
 protected $prime;
 protected $name;
 protected $acquisti=[];
 protected $surname;
 protected $address;
 protected $phone_number;
-public function __construct($cardnumber,$name,$surname,$address,$phone_number,$prime){
+public function __construct($id,$name,$surname,$address,$phone_number,$prime){
+	$this->id=$id;
 	$this->name=$name;
  $this->prime=$prime;
 	$this->cardnumber=$cardnumber;
    $this->surname=$surname;
 	 $this->address=$address;
 	 $this->phone_number=$phone_number;
+}
+public function addCard($card) {
+	if ($card instanceof CreditCard) {
+		$this -> cards[] = $card;
+	} else {
+		throw new Exception('La carta non è valida');
+	}
 }
 public function buyProduct(CreditCard $creditcard,Product $product){
 if($product->getPrice()<$creditcard->amount){
@@ -115,18 +154,24 @@ public function getAmount(){
 }
 }
 
-$notebook= new Pc('asus 354',700.45,true);
-$cremaviso = new Benessere('avene repair',15,true);
+
+// Creo prodotti
+
+$notebook= new Pc(1,'asus 354',700.45,true);
+$cremaviso = new Benessere(2,'avene repair',15,true);
 $cremaviso->setBenessere('crema','donna');
-$pigiama = new Clothes('pigiama',18,true);
+$pigiama = new Clothes(3,'pigiama',18,true);
 $pigiama->setClothes('pigiama','uomo');
-$gta= new VideoGame('gta5',60,false);
+$gta= new VideoGame(4,'gta5',60,false);
+
+// Creo clienti con carte di credito
+
 $creditcard1=new CreditCard(100,2033,5050550503);
-$compratore1 = new Buyer(5050550503,'Pippo','Baudo','Via della pace,8',3443434331,true);
+$compratore1 = new Buyer(1,'Pippo','Baudo','Via della pace,8',3443434331,true);
 $creditcard2=new CreditCard(250,2024,5050550888);
-$compratore2 = new Buyer(5050550888,'Nancy','Baudo','Via degli ulivi,22',3498687676,true);
+$compratore2 = new Buyer(2,'Nancy','Baudo','Via degli ulivi,22',3498687676,true);
 $creditcard3=new CreditCard(1000,2033,5050550666);
-$compratore3 = new Buyer(5050550666,'Raffaele','Auriemma','Via della morte,4',3443376432,true);
+$compratore3 = new Buyer(3,'Raffaele','Auriemma','Via della morte,4',3443376432,true);
 
 try{
 $compratore1->buyProduct($creditcard1,$gta);
@@ -154,6 +199,12 @@ $creditcard4=new CreditCard(1000,2000,88888888);
 }catch(Exception $error){
 echo $error->getMessage() ."<br>";
 }
+try{
+$compratore1->addCard('FlavioInsinna');
+}catch(Exception $error){
+echo $error->getMessage() ."<br>";
+}
+
 echo "Il credito residuo della prima carta dopo l'acquisto è di " . $creditcard1->getAmount() . " euro <br>";
 echo "Il credito residuo della seconda carta dopo l'acquisto è di " . $creditcard2->getAmount() . " euro <br>";
 echo "Il credito residuo della terza carta dopo l'acquisto è di " . $creditcard3->getAmount() . " euro <br>";
