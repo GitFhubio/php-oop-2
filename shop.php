@@ -1,7 +1,5 @@
 <?php
 
-$current_year =(int)date('Y');
-
 class Product{
 	protected $model;
 	protected $shippingTime = 3;
@@ -107,7 +105,7 @@ public function __construct(float $amount,int $expirationdate,int $cardnumber){
 	}
 }
 public function isValid(){
-return $this->expirationdate>$current_year;
+return $this->expirationdate>2021;
 }
 }
 
@@ -123,6 +121,12 @@ $creditcard2=new CreditCard(250,2024,5050550888);
 $compratore2 = new Buyer(5050550888,'Nancy','Baudo','Via degli ulivi,22',3498687676,true);
 $creditcard3=new CreditCard(1000,2033,5050550666);
 $compratore3 = new Buyer(5050550666,'Raffaele','Auriemma','Via della morte,4',3443376432,true);
+
+try{
+$creditcard4=new CreditCard(1000,2000,5050550666);
+}catch(Exception $error){
+echo $error->getMessage();
+}
 
 try{
 $compratore1->buyProduct($creditcard1,$gta);
