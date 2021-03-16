@@ -75,6 +75,7 @@ public function __construct($cardnumber,$name,$surname,$address,$phone_number,$p
 public function buyProduct(CreditCard $creditcard,Product $product){
 if($product->getPrice()<$creditcard->amount){
 	$this->acquisti[]=$product;
+	$creditcard->setAmount($creditcard->amount - $product->getPrice());
 }
 if ($product->getPrime() == true && $this->prime == true) {
 		$product->setShipping(1);
@@ -100,11 +101,17 @@ public function __construct(float $amount,int $expirationdate,int $cardnumber){
 	$this->cardnumber=$cardnumber;
 	$this->expirationdate=$expirationdate;
 	if (!$this->isValid()){
-		throw new Exception('La carta è scaduta');
+		throw new Exception('La carta numero '.$cardnumber.' è scaduta');
 	}
 }
 public function isValid(){
 return $this->expirationdate>2021;
+}
+public function setAmount($amount){
+$this->amount=$amount;
+}
+public function getAmount(){
+	return $this->amount;
 }
 }
 
@@ -120,12 +127,6 @@ $creditcard2=new CreditCard(250,2024,5050550888);
 $compratore2 = new Buyer(5050550888,'Nancy','Baudo','Via degli ulivi,22',3498687676,true);
 $creditcard3=new CreditCard(1000,2033,5050550666);
 $compratore3 = new Buyer(5050550666,'Raffaele','Auriemma','Via della morte,4',3443376432,true);
-var_dump($creditcard3);
-try{
-$creditcard4=new CreditCard(1000,2000,5050550666);
-}catch(Exception $error){
-echo $error->getMessage();
-}
 
 try{
 $compratore1->buyProduct($creditcard1,$gta);
@@ -148,7 +149,14 @@ $compratore3->buyProduct($creditcard3,$pigiama);
 }catch(Exception $error){
 echo $error->getMessage();
 }
-
+try{
+$creditcard4=new CreditCard(1000,2000,88888888);
+}catch(Exception $error){
+echo $error->getMessage() ."<br>";
+}
+echo "Il credito residuo della prima carta dopo l'acquisto è di " . $creditcard1->getAmount() . " euro <br>";
+echo "Il credito residuo della seconda carta dopo l'acquisto è di " . $creditcard2->getAmount() . " euro <br>";
+echo "Il credito residuo della terza carta dopo l'acquisto è di " . $creditcard3->getAmount() . " euro <br>";
 // print_r($compratore3->showAcquisti());
 $compratori=[$compratore1,$compratore2,$compratore3];
 $prodotti=[$cremaviso,$pigiama,$gta];
