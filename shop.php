@@ -1,5 +1,4 @@
 <?php
-
 class Product{
 	protected $model;
 	protected $shippingTime = 3;
