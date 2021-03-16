@@ -97,7 +97,7 @@ protected $expirationdate;
 protected $amount;
 public function __construct(float $amount,int $expirationdate,int $cardnumber){
 	$this->amount=$amount;
-	$this->cardnumber;
+	$this->cardnumber=$cardnumber;
 	$this->expirationdate=$expirationdate;
 	if (!$this->isValid()){
 		throw new Exception('La carta è scaduta');
@@ -120,7 +120,7 @@ $creditcard2=new CreditCard(250,2024,5050550888);
 $compratore2 = new Buyer(5050550888,'Nancy','Baudo','Via degli ulivi,22',3498687676,true);
 $creditcard3=new CreditCard(1000,2033,5050550666);
 $compratore3 = new Buyer(5050550666,'Raffaele','Auriemma','Via della morte,4',3443376432,true);
-
+var_dump($creditcard3);
 try{
 $creditcard4=new CreditCard(1000,2000,5050550666);
 }catch(Exception $error){
