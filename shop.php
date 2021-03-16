@@ -27,14 +27,29 @@ class Product{
 }
 
 class Elettronica extends Product{
-
+protected $memory='none';
+protected $processor='none';
+public function setElettronica($memory,$processor){
+	$this->memory=$memory;
+	$this->processor=$processor;
+}
 }
 class Benessere extends Product{
-
+ protected $type;
+ protected $genre;
+ public function setBenessere($type,$genre){
+	 $this->type=$type;
+	 $this->genre=$genre;
+ }
 }
 
 class Clothes extends Product{
-
+protected $type;
+protected $genre;
+public function setClothes($type,$genre){
+	$this->type=$type;
+	$this->genre=$genre;
+}
 }
 
 class VideoGame extends Elettronica{
@@ -98,7 +113,9 @@ return $this->expirationdate>$current_year;
 
 $notebook= new Pc('asus 354',700.45,true);
 $cremaviso = new Benessere('avene repair',15,true);
+$cremaviso->setBenessere('crema','donna');
 $pigiama = new Clothes('pigiama',18,true);
+$pigiama->setClothes('pigiama','uomo');
 $gta= new VideoGame('gta5',60,true);
 $creditcard1=new CreditCard(100,2033,5050550503);
 $compratore1 = new Buyer(5050550503,'Pippo','Baudo','Via della pace,8',3443434331,true);
