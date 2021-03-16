@@ -113,7 +113,7 @@ $cremaviso = new Benessere('avene repair',15,true);
 $cremaviso->setBenessere('crema','donna');
 $pigiama = new Clothes('pigiama',18,true);
 $pigiama->setClothes('pigiama','uomo');
-$gta= new VideoGame('gta5',60,true);
+$gta= new VideoGame('gta5',60,false);
 $creditcard1=new CreditCard(100,2033,5050550503);
 $compratore1 = new Buyer(5050550503,'Pippo','Baudo','Via della pace,8',3443434331,true);
 $creditcard2=new CreditCard(250,2024,5050550888);
