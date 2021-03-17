@@ -79,26 +79,26 @@ class Clothes extends Product{
 }
 
 class VideoGame extends Elettronica{
-protected $format;
-protected $condition;
-protected $publisher;
-public function setVideoGame($format,$condition,$publisher){
-  $this->format=$format;
-  $this->condition=$condition;
-  $this->publisher=$publisher;
-}
+  protected $format;
+  protected $condition;
+  protected $publisher;
+  public function setVideoGame($format,$condition,$publisher){
+    $this->format=$format;
+    $this->condition=$condition;
+    $this->publisher=$publisher;
+  }
 }
 
 class Pc extends Elettronica{
-protected $screen;
-protected $brand;
-protected $type;
+  protected $screen;
+  protected $brand;
+  protected $type;
 
-public function setPc($type,$brand,$screen){
-  $this->brand=$brand;
-  $this->screen=$screen;
+  public function setPc($type,$brand,$screen){
+    $this->brand=$brand;
+    $this->screen=$screen;
     $this->type=$type;
-}
+  }
 }
 
 class Buyer extends CreditCard {
@@ -232,9 +232,8 @@ echo "Il credito residuo della prima carta dopo l'acquisto è di " . $creditcard
 echo "Il credito residuo della seconda carta dopo l'acquisto è di " . $creditcard2->getAmount() . " euro <br>";
 echo "Il credito residuo della terza carta dopo l'acquisto è di " . $creditcard3->getAmount() . " euro <br>";
 // print_r($compratore3->showAcquisti());
-$compratori=[$compratore1,$compratore2,$compratore3,$compratore4];
-$prodotti=[$cremaviso,$pigiama,$gta];
-foreach ($compratori as $compratore) {
+$compratoriteorici=[$compratore1,$compratore2,$compratore3,$compratore4];
+foreach ($compratoriteorici as $compratore) {
 
   if(count($compratore->showAcquisti())>0){
     echo $compratore->getName(). " ha effettuato acquisti <br>";
@@ -242,8 +241,8 @@ foreach ($compratori as $compratore) {
     echo $compratore->getName(). " non ha effettuato acquisti <br>";
   }
 }
-$compratori=[$compratore1,$compratore2,$compratore3];
-foreach ($compratori as $compratore) {
+$compratorieffettivi=[$compratore1,$compratore2,$compratore3];
+foreach ($compratorieffettivi as $compratore) {
   foreach ($compratore->showAcquisti() as $acquisto) {
     echo $compratore->getName() ." ha acquistato ".$acquisto->getModel()."<br>";
   }
