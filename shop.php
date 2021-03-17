@@ -47,7 +47,7 @@ class Product{
   public function getId(){
     return $this->id;
   }
-  public function setShipping($shippingTime){
+  public function setShipping(int $shippingTime){
     $this->shippingTime=$shippingTime;
   }
 }
@@ -110,7 +110,7 @@ class Buyer extends CreditCard {
   protected $surname;
   protected $address;
   protected $phone_number;
-  public function __construct($id,$name,$surname,$address,$phone_number,$prime){
+  public function __construct(int $id,string $name,string $surname,string $address,int $phone_number,bool $prime){
     $this->id=$id;
     $this->name=$name;
     $this->prime=$prime;
