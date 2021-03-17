@@ -106,13 +106,15 @@ class Buyer extends CreditCard {
   protected  $cards=[];
   protected $prime;
   protected $name;
+  protected $birth_date;
   protected $acquisti=[];
   protected $surname;
   protected $address;
   protected $phone_number;
-  public function __construct(int $id,string $name,string $surname,string $address,int $phone_number,bool $prime){
+  public function __construct(int $id,string $name,string $surname,string $address,string $birth_date,int $phone_number,bool $prime){
     $this->id=$id;
     $this->name=$name;
+    $this->birth_date=$birth_date;
     $this->prime=$prime;
     $this->cardnumber=$cardnumber;
     $this->surname=$surname;
@@ -143,6 +145,12 @@ class Buyer extends CreditCard {
   }
   public function getPrime(){
     return $this->prime;
+  }
+  public function getId(){
+    return $this->id;
+  }
+  public function getBirthDate(){
+    return $this->birth_date;
   }
 }
 
@@ -182,12 +190,12 @@ $gta= new VideoGame(4,'gta5',60,false);
 // Creo clienti con carte di credito
 
 $creditcard1=new CreditCard(100,2033,5050550503);
-$compratore1 = new Buyer(1,'Pippo','Baudo','Via della pace,8',3443434331,true);
+$compratore1 = new Buyer(1,'Pippo','Baudo','Via della pace,8','06-10-90',3443434331,true);
 $creditcard2=new CreditCard(250,2024,5050550888);
-$compratore2 = new Buyer(2,'Nancy','Baudo','Via degli ulivi,22',3728687676,true);
+$compratore2 = new Buyer(2,'Nancy','Brilli','Via degli ulivi,22','28-03-94',3728687676,true);
 $creditcard3=new CreditCard(1000,2033,5050550666);
-$compratore3 = new Buyer(3,'Raffaele','Auriemma','Via della morte,4',3443376432,true);
-$compratore4 = new Buyer(4,'Enzo','Miccio','Via degli Aureli,15',3943676873,true);
+$compratore3 = new Buyer(3,'Raffaele','Auriemma','Via della morte,4','04-02-83',3443376432,true);
+$compratore4 = new Buyer(4,'Enzo','Miccio','Via degli Aureli,15','23-09-67',3943676873,true);
 try{
   $compratore1->buyProduct($creditcard1,$gta);
 }catch(Exception $error){
